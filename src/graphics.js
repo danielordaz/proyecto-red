@@ -30,7 +30,7 @@ const qualityPresets = {
 
 export function getGraphicsSettings() {
   const saved = localStorage.getItem('graphicsQuality');
-  return saved && qualityPresets[saved] ? qualityPresets[saved] : qualityPresets.medium;
+  return saved && qualityPresets[saved] ? qualityPresets[saved] : qualityPresets.high;
 }
 
 export function getGraphicsQuality() {
