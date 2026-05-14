@@ -152,6 +152,7 @@ export function initModels(sceneData, state) {
               child.receiveShadow = true;
               if (child.material) {
                 child.material.envMapIntensity = 0.5;
+                child.material.shadowSide = THREE.FrontSide;
                 if (child.material.transparent) {
                   child.material.depthWrite = false;
                   child.material.alphaToCoverage = true;

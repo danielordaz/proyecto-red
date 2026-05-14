@@ -4,42 +4,63 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-export function initHighlight(sceneData, state) {
+export function initHighlight(sceneData, state, settings) {
   const { scene, camera, renderer } = sceneData;
 
-  const composer = new EffectComposer(renderer);
-  const renderPass = new RenderPass(scene, camera);
-  composer.addPass(renderPass);
+  let usePostProcessing = settings.postProcessing;
+  let useEmissiveOutline = settings.outlineEmissive;
+  let composer = null;
+  let outlinePass = null;
 
-  const outlinePass = new OutlinePass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    scene,
-    camera
-  );
-  outlinePass.edgeStrength = 5.0;
-  outlinePass.edgeGlow = 1.0;
-  outlinePass.edgeThickness = 2.5;
-  outlinePass.pulsePeriod = 1.5;
-  outlinePass.visibleEdgeColor.set(0xFFA500);
-  outlinePass.hiddenEdgeColor.set(0x663300);
-  composer.addPass(outlinePass);
+  if (usePostProcessing) {
+    composer = new EffectComposer(renderer);
+    const renderPass = new RenderPass(scene, camera);
+    composer.addPass(renderPass);
 
-  const outputPass = new OutputPass();
-  composer.addPass(outputPass);
+    outlinePass = new OutlinePass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      scene,
+      camera
+    );
+    outlinePass.edgeStrength = 5.0;
+    outlinePass.edgeGlow = 1.0;
+    outlinePass.edgeThickness = 2.5;
+    outlinePass.pulsePeriod = 1.5;
+    outlinePass.visibleEdgeColor.set(0xFFA500);
+    outlinePass.hiddenEdgeColor.set(0x663300);
+    composer.addPass(outlinePass);
 
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight);
-  });
+    const outputPass = new OutputPass();
+    composer.addPass(outputPass);
 
-  function animate() {
-    requestAnimationFrame(animate);
-    outlinePass.selectedObjects = state.highlightedObjects || [];
-    composer.render();
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      composer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (outlinePass) {
+        outlinePass.selectedObjects = state.highlightedObjects || [];
+      }
+      composer.render();
+    }
+    animate();
+  } else {
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
   }
-  animate();
 
   let originalEmissive = null;
 
@@ -65,5 +86,13 @@ export function initHighlight(sceneData, state) {
     }
   }
 
-  return { composer, outlinePass, setHoveredObject, isLatiguillo };
+  function setPostProcessing(enabled) {
+    usePostProcessing = enabled;
+  }
+
+  function setOutlineMode(emissiveOnly) {
+    useEmissiveOutline = emissiveOnly;
+  }
+
+  return { composer, outlinePass, setHoveredObject, isLatiguillo, setPostProcessing, setOutlineMode };
 }

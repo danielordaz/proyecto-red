@@ -280,6 +280,60 @@ body {
   font-weight: 600;
 }
 
+#ui-graphics {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(16, 16, 32, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#ui-graphics h3 {
+  color: #e0e0e0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+#graphics-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-graphics {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #b0b0b0;
+  padding: 5px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-graphics:hover {
+  background: rgba(255, 165, 0, 0.15);
+  border-color: rgba(255, 165, 0, 0.4);
+  color: #e0e0e0;
+}
+
+.btn-graphics.active {
+  background: rgba(255, 165, 0, 0.25);
+  border-color: #FFA500;
+  color: #FFA500;
+}
+
 #plano-expanded {
   position: fixed;
   top: 0;
