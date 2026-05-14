@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador 3D - Proyecto Redes</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div id="ui-plantas">
+    <h3>Plantas</h3>
+    <div id="botones-plantas">
+      <button class="btn-planta" data-planta="buhardilla">Buhardilla</button>
+      <button class="btn-planta" data-planta="P2">Planta 2</button>
+      <button class="btn-planta active" data-planta="P1">Planta 1</button>
+      <button class="btn-planta" data-planta="bodega">Bodega</button>
+    </div>
+  </div>
+
+  <div id="ui-info-planta">
+    <h3 id="info-planta-title">Primera Planta</h3>
+    <p id="info-planta-description">Cargando...</p>
+  </div>
+
+  <div id="ui-plano">
+    <h3>Plano <span class="expand-hint">(click para ampliar)</span></h3>
+    <div id="plano-container">
+      <div id="plano-placeholder">Plano Planta 1</div>
+      <img id="plano-imagen" src="" alt="Plano de planta" style="display: none;">
+    </div>
+  </div>
+
+  <div id="ui-controles">
+    <h3>Controles</h3>
+    <div class="control-item">
+      <span class="control-key">Click derecho + arrastrar</span>
+      <span class="control-desc">Girar cámara</span>
+    </div>
+    <div class="control-item">
+      <span class="control-key">W A S D</span>
+      <span class="control-desc">Moverse</span>
+    </div>
+    <div class="control-item">
+      <span class="control-key">Scroll</span>
+      <span class="control-desc">Velocidad cámara</span>
+    </div>
+    <div class="speed-bar-container">
+      <div class="speed-bar-label">Velocidad</div>
+      <div class="speed-bar-track">
+        <div id="speed-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="plano-expanded" style="display: none;">
+    <div id="plano-expanded-bg"></div>
+    <div id="plano-expanded-content">
+      <button id="plano-close-btn">&times;</button>
+      <img id="plano-expanded-img" src="" alt="Plano ampliado">
+    </div>
+  </div>
+
+  <div id="tooltip" style="display: none;">
+    <img id="tooltip-image" src="" alt="" style="display: none;">
+    <div id="tooltip-content">
+      <div id="tooltip-title"></div>
+      <div id="tooltip-description"></div>
+    </div>
+  </div>
+
+  <div id="loading" style="display: none;">
+    <div class="spinner"></div>
+    <p>Cargando modelo...</p>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
