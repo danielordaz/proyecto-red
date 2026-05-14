@@ -136,7 +136,7 @@ export function initModels(sceneData, state) {
 
   function loadModel(plant) {
     return new Promise((resolve, reject) => {
-      const modelPath = `/assets/models/${plant}.glb`;
+      const modelPath = `${import.meta.env.BASE_URL}assets/models/${plant}.glb`;
       loader.load(
         modelPath,
         (gltf) => {

@@ -77,7 +77,7 @@ export function initUI(state) {
   });
 
   function updatePlano(planta) {
-    const planoPath = `/assets/planos/${planta}.png`;
+    const planoPath = `${import.meta.env.BASE_URL}assets/planos/${planta}.png`;
     const img = new Image();
     img.onload = () => {
       planoImagen.src = planoPath;
